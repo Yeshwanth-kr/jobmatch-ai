@@ -19,7 +19,7 @@ const Login = () => {
         `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
         {
           method: "POST",
-          credentials: "include", // 👈 Send cookie!
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },

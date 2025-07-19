@@ -26,7 +26,7 @@ const Register = () => {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            credentials: "include", // so cookies are saved
+            credentials: "include",
             body: JSON.stringify({
               email,
               name,
