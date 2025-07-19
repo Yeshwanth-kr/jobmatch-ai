@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLoading } from "../context/LoadingContext.jsx";
-import toast from "react-hot-toast";
 
 const Login = () => {
   const { setAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { loading } = useLoading();
 
@@ -19,21 +19,23 @@ const Login = () => {
         `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
+          credentials: "include", // 👈 Send cookie!
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ email, password }),
         }
       );
 
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data.message || "Login failed");
+        setError(data.message || "Login failed");
       } else {
         setAuthenticated(true);
-        navigate("/home");
+        navigate("/home"); // or wherever you want to go next
       }
     } catch (err) {
-      toast.error("Network Error");
+      setError("Network error");
     }
   };
 
@@ -71,6 +73,7 @@ const Login = () => {
             }}
             required
           />
+          {error && <p className="text-red-600 text-sm">{error}</p>}
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"

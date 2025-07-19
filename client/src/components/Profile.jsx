@@ -26,9 +26,9 @@ const Profile = () => {
 
   return (
     <div className="bottom-0 w-full h-[12%] justify-between flex p-2 items-center">
-      <p className="font-bold">{name.split(" ")[0]}
+      {name.split(" ")[0]}
       <br></br>
-      {name.split(" ")[1] && name.split(" ")[1]}</p>
+      {name.split(" ")[1] && name.split(" ")[1]}
       <button
         onClick={handleLogout}
         className="h-10 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition ease-in-out delay-50 duration-300"
