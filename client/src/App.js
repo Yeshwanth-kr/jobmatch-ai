@@ -3,7 +3,7 @@ import "./App.css";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuth } from "./context/AuthContext.jsx";
 import { useUser } from "./context/UserContext.jsx";
 import { useLoading } from "./context/LoadingContext.jsx";

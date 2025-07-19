@@ -24,8 +24,8 @@ export const register = async (req, res) => {
           .status(201)
           .cookie("token", token, {
             httpOnly: true,
-            secure: false, // Set to true in production with HTTPS
-            sameSite: "Lax",
+            secure: true, // Set to true in production with HTTPS
+            sameSite: "None",
             maxAge: 24 * 60 * 60 * 1000,
           })
           .json({ message: "User registered" });
@@ -56,8 +56,8 @@ export const login = async (req, res) => {
       .status(200)
       .cookie("token", token, {
         httpOnly: true,
-        secure: false, // Set to true in production with HTTPS
-        sameSite: "Lax",
+        secure: true, // Set to true in production with HTTPS
+        sameSite: "None",
         maxAge: 24 * 60 * 60 * 1000,
       })
       .json({ message: "Login successful" });
@@ -67,7 +67,15 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.status(200).cookie("token", "").json({ message: "Logged out" });
+  res
+    .status(200)
+    .cookie("token", "", {
+      httpOnly: true,
+      secure: true, // Set to true in production with HTTPS
+      sameSite: "None",
+      maxAge: 1,
+    })
+    .json({ message: "Logged out" });
 };
 
 export const me = async (req, res) => {
