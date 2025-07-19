@@ -19,13 +19,12 @@ export const register = async (req, res) => {
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
           expiresIn: "1d",
         });
-
         res
           .status(201)
           .cookie("token", token, {
             httpOnly: true,
-            secure: true, // Set to true in production with HTTPS
-            sameSite: "None",
+            secure: !process.env.DEVELOPMENT, // Set to true in production with HTTPS
+            sameSite: `${process.env.DEVELOPMENT ? "lax" : "none"}`,
             maxAge: 24 * 60 * 60 * 1000,
           })
           .json({ message: "User registered" });
@@ -56,8 +55,8 @@ export const login = async (req, res) => {
       .status(200)
       .cookie("token", token, {
         httpOnly: true,
-        secure: true, // Set to true in production with HTTPS
-        sameSite: "None",
+        secure: !process.env.DEVELOPMENT,
+        sameSite: `${process.env.DEVELOPMENT ? "lax" : "none"}`,
         maxAge: 24 * 60 * 60 * 1000,
       })
       .json({ message: "Login successful" });
@@ -67,15 +66,7 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res
-    .status(200)
-    .cookie("token", "", {
-      httpOnly: true,
-      secure: true, // Set to true in production with HTTPS
-      sameSite: "None",
-      maxAge: 1,
-    })
-    .json({ message: "Logged out" });
+  res.status(200).clearCookie("token").json({ message: "Logged out" });
 };
 
 export const me = async (req, res) => {

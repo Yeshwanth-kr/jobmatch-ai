@@ -62,7 +62,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-  // return <Home />;
 }
 
 export default App;
